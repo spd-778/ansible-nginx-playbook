@@ -1,0 +1,25 @@
+---
+
+
+- name: Install and configure Nginx
+  hosts: all 
+  become: yes
+
+  tasks:
+     - name: Install Nginx
+       apt: 
+         name: nginx
+         state: present
+         update_cache: yes
+
+     - name: Create custom index file
+       copy: 
+         content: "Deployed using ansible"
+         dest: var/www/html/index.html
+
+     - name: Ensure nginx is running
+       service: 
+         name: nginx
+         state: started
+         enabled: yes
+
